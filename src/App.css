@@ -1,0 +1,83 @@
+/* ====== FULL SCREEN CONTAINER ====== */
+* { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+html, body, #root { width:100%; height:100%; }
+
+.container{
+  width:100vw;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  position:relative;
+  transition: background 0.5s ease;
+}
+
+/* ====== CARD ====== */
+.card{
+  width:95%;
+  max-width:520px;
+  min-height:70vh;
+  padding:30px;
+  border-radius:25px;
+  text-align:center;
+  color:white;
+  backdrop-filter:blur(20px);
+  overflow-y:auto;
+  position:relative;
+}
+
+/* ====== SECTION GLITTER COLORS ====== */
+.dashboard-bg{
+  background: linear-gradient(135deg,#4f46e5,#9333ea);
+}
+.word-bg{
+  background: linear-gradient(135deg,#3b82f6,#60a5fa);
+}
+.math-bg{
+  background: linear-gradient(135deg,#10b981,#34d399);
+}
+.logic-bg{
+  background: linear-gradient(135deg,#7c3aed,#a78bfa);
+}
+.number-bg{
+  background: linear-gradient(135deg,#ef4444,#f87171);
+}
+
+/* ====== GLITTER ====== */
+.container::before{
+  content:"";
+  position:absolute;
+  width:200%;
+  height:200%;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size:40px 40px;
+  opacity:0.08;
+  animation:sparkle 25s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes sparkle{
+  from { transform:translate(0,0); }
+  to { transform:translate(-50%,-50%); }
+}
+
+/* ====== TRANSITION ====== */
+.fade-in{ animation: fadeIn 0.3s ease forwards; }
+.fade-out{ animation: fadeOut 0.3s ease forwards; }
+
+@keyframes fadeIn{ from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);} }
+@keyframes fadeOut{ from{opacity:1; transform:scale(1);} to{opacity:0; transform:scale(0.95);} }
+
+/* ====== BUTTONS ====== */
+.btn{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border-radius:12px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.25s;
+}
+.btn:hover{ transform:scale(1.05); }
+.completed::after{ content:" ✅"; }
