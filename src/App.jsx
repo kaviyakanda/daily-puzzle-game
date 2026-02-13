@@ -1,3 +1,10 @@
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { useEffect } from "react";
+
+
+
+
 import React, { useState } from "react";
 import Dashboard from "./components/Dashboard";
 import WordPuzzle from "./components/WordPuzzle";
@@ -8,7 +15,17 @@ import Login from "./components/Login";
 import "./App.css";
 
 export default function App() {
+
+  // ✅ store logged in user
+  useEffect(() => {
+  const unsub = onAuthStateChanged(auth, (u) => {
+    setUser(u);
+  });
+
+  return () => unsub();
+}, []);
   const [user, setUser] = useState(null);
+
   const [section, setSection] = useState("dashboard");
   const [transition, setTransition] = useState(false);
 
@@ -19,6 +36,11 @@ export default function App() {
       setTransition(false);
     }, 300);
   };
+
+  // ✅ if NOT logged in → show login first
+  if (!user) {
+    return <Login onLogin={(u) => setUser(u)} />;
+  }
 
   const renderSection = () => {
     switch (section) {
@@ -37,8 +59,7 @@ export default function App() {
 
   return (
     <div className={`container ${section}-bg ${transition ? "fade-out" : "fade-in"}`}>
-      {user ? renderSection() : <Login onLogin={setUser} />}
+      {renderSection()}
     </div>
   );
 }
-
